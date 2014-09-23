@@ -1,0 +1,24 @@
+{
+  "name": "perfect-resize",
+  "version": "1.0.1",
+  "description": "Robust resize handles for your HTML5 apps and websites",
+  "author": "Elisée Maurer <elisee@sparklinlabs.com>",
+  "main": "./perfectResize.coffee",
+  "repository": {
+    "type": "hg",
+    "url": "https://bitbucket.org/sparklinlabs/perfect-resize"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "coffee-script": "^1.7.1",
+    "coffeeify": "^0.7.0",
+    "vinyl-source-stream": "^0.1.1",
+    "browserify": "^5.9.1"
+  },
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
+  }
+}
