@@ -1,6 +1,6 @@
 # perfect-resize
 
-Robust, no-frill, stylable resize handles for HTML5 apps
+Robust, no-frills, stylable resize handles for HTML5 apps
 
 ## How to install
 
