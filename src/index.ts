@@ -1,62 +1,83 @@
-export = function(targetElt: HTMLElement, direction: string, options?: { collapsable?: boolean }) {
-  if ([ "left", "right", "top", "bottom" ].indexOf(direction) === -1) throw new Error("Invalid direction" );
+/// <reference path="../typings/tsd.d.ts" />
 
-  let horizontal = [ "left", "right" ].indexOf(direction) !== -1;
-  let start = [ "left", "top" ].indexOf(direction) !== -1;
+import events = require("events");
 
-  if (options == null) options = {};
+class ResizeHandle extends events.EventEmitter {
 
-  let handleElt = document.createElement("div");
-  handleElt.classList.add("resize-handle");
-  handleElt.classList.add(direction);
-  if (options.collapsable) handleElt.classList.add("collapsable");
+  handleElt: HTMLDivElement;
+  targetElt: HTMLElement;
+  direction: string;
+  horizontal: boolean;
+  start: boolean;
+  savedSize: number = null;
 
-  if (start) targetElt.parentNode.insertBefore(handleElt, targetElt.nextSibling);
-  else targetElt.parentNode.insertBefore(handleElt, targetElt);
 
-  let savedSize: number = null;
+  constructor(targetElt: HTMLElement, direction: string, options?: { collapsable?: boolean }) {
+    super();
 
-  handleElt.addEventListener("dblclick", (event) => {
-    if (event.button !== 0 || !handleElt.classList.contains("collapsable")) return;
+    if ([ "left", "right", "top", "bottom" ].indexOf(direction) === -1) throw new Error("Invalid direction" );
 
-    let size: number = (<any>targetElt.getBoundingClientRect())[ horizontal ? "width" : "height" ];
+    this.horizontal = [ "left", "right" ].indexOf(direction) !== -1;
+    this.start = [ "left", "top" ].indexOf(direction) !== -1;
+
+    if (options == null) options = {};
+
+    this.targetElt = targetElt;
+    this.direction = direction;
+
+    this.handleElt = <HTMLDivElement>document.createElement("div");
+    this.handleElt.classList.add("resize-handle");
+    this.handleElt.classList.add(direction);
+    if (options.collapsable) this.handleElt.classList.add("collapsable");
+
+    if (this.start) targetElt.parentNode.insertBefore(this.handleElt, targetElt.nextSibling);
+    else targetElt.parentNode.insertBefore(this.handleElt, targetElt);
+
+    this.handleElt.addEventListener("dblclick", this.onDoubleClick);
+    this.handleElt.addEventListener("mousedown", this.onMouseDown);
+  }
+
+  onDoubleClick = (event: MouseEvent) => {
+    if (event.button !== 0 || !this.handleElt.classList.contains("collapsable")) return;
+
+    let size: number = (<any>this.targetElt.getBoundingClientRect())[ this.horizontal ? "width" : "height" ];
     let newSize: number;
 
     if (size > 0) {
-      savedSize = size;
+      this.savedSize = size;
       newSize = 0;
-      targetElt.style.display = "none";
+      this.targetElt.style.display = "none";
     } else {
-      newSize = savedSize;
-      savedSize = null;
-      targetElt.style.display = "";
+      newSize = this.savedSize;
+      this.savedSize = null;
+      this.targetElt.style.display = "";
     }
 
-    if (horizontal) targetElt.style.width = `${newSize}px`;
-    else targetElt.style.height = `${newSize}px`;
-  });
+    if (this.horizontal) this.targetElt.style.width = `${newSize}px`;
+    else this.targetElt.style.height = `${newSize}px`;
+  };
 
-  handleElt.addEventListener("mousedown", (event) => {
+  onMouseDown = (event: MouseEvent) => {
     if (event.button !== 0) return;
-    if (targetElt.style.display === "none") return;
+    if (this.targetElt.style.display === "none") return;
 
     let initialSize: number;
     let startDrag: number;
     let directionClass: string;
 
-    if (horizontal) {
-      initialSize = targetElt.getBoundingClientRect().width;
+    if (this.horizontal) {
+      initialSize = this.targetElt.getBoundingClientRect().width;
       startDrag = event.clientX;
       directionClass = "vertical";
     } else {
-      initialSize = targetElt.getBoundingClientRect().height;
+      initialSize = this.targetElt.getBoundingClientRect().height;
       startDrag = event.clientY;
       directionClass = "horizontal";
     }
 
     let dragTarget: any;
 
-    if ((<any>handleElt).setCapture != null) {
+    if ((<any>this.handleElt).setCapture != null) {
       dragTarget = this;
       dragTarget.setCapture();
     } else {
@@ -66,14 +87,14 @@ export = function(targetElt: HTMLElement, direction: string, options?: { collaps
     document.documentElement.classList.add("handle-dragging", directionClass);
 
     let onMouseMove = (event: MouseEvent) => {
-      let size = initialSize + (start ? -startDrag : startDrag);
+      let size = initialSize + (this.start ? -startDrag : startDrag);
 
-      if (horizontal) {
-        size += start ? event.clientX : -event.clientX;
-        targetElt.style.width = `${size}px`;
+      if (this.horizontal) {
+        size += this.start ? event.clientX : -event.clientX;
+        this.targetElt.style.width = `${size}px`;
       } else {
-        size += start ? event.clientY : -event.clientY;
-        targetElt.style.height = `${size}px`;
+        size += this.start ? event.clientY : -event.clientY;
+        this.targetElt.style.height = `${size}px`;
       }
     };
 
@@ -87,5 +108,8 @@ export = function(targetElt: HTMLElement, direction: string, options?: { collaps
 
     dragTarget.addEventListener("mousemove", onMouseMove);
     dragTarget.addEventListener("mouseup", onMouseUp);
-  });
+  };
+
 }
+
+export = ResizeHandle;

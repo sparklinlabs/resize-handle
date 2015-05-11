@@ -1,12 +1,12 @@
 {
   "name": "perfect-resize",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Robust resize handles for your HTML5 apps and websites",
   "author": "Elisée Maurer <elisee@sparklinlabs.com>",
-  "main": "./lib/perfectResize.js",
+  "main": "./lib/PerfectResize.js",
   "scripts": {
-    "build": "cd src && ../node_modules/.bin/tsc && cd .. && ./node_modules/.bin/browserify src/index.js --standalone perfectResize --outfile lib/perfectResize.js",
-    "build_win": "cd src && call ../node_modules/.bin/tsc && cd .. && call node_modules/.bin/browserify src/index.js --standalone perfectResize --outfile lib/perfectResize.js"
+    "build": "cd src && ../node_modules/.bin/tsc && cd .. && ./node_modules/.bin/browserify src/index.js --standalone PerfectResize --outfile lib/PerfectResize.js",
+    "build_win": "cd src && call ../node_modules/.bin/tsc && cd .. && call node_modules/.bin/browserify src/index.js --standalone PerfectResize --outfile lib/PerfectResize.js"
   },
   "repository": {
     "type": "hg",
