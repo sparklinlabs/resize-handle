@@ -4,13 +4,11 @@ Robust, no-frill, stylable resize handles for HTML5 apps
 
 ## How to install
 
-```
-npm install perfect-resize
-```
+`npm install perfect-resize`
 
 ## Usage
 
-See ``doc/demo.html``. 
+See ``doc/demo.html``.
 
  * Setup a ``display: flex; box-sizing: border-box;`` container with two ``div`` children.
  * Make the main pane ``flex: 1;`` and give it a ``min-width``.
