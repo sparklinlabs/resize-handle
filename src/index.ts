@@ -61,6 +61,8 @@ class ResizeHandle extends events.EventEmitter {
     if (event.button !== 0) return;
     if (this.targetElt.style.display === "none") return;
 
+    this.emit("dragStart");
+
     let initialSize: number;
     let startDrag: number;
     let directionClass: string;
@@ -88,6 +90,7 @@ class ResizeHandle extends events.EventEmitter {
 
     let onMouseMove = (event: MouseEvent) => {
       let size = initialSize + (this.start ? -startDrag : startDrag);
+      this.emit("drag");
 
       if (this.horizontal) {
         size += this.start ? event.clientX : -event.clientX;
@@ -104,6 +107,8 @@ class ResizeHandle extends events.EventEmitter {
 
       dragTarget.removeEventListener("mousemove", onMouseMove);
       dragTarget.removeEventListener("mouseup", onMouseUp);
+
+      this.emit("dragEnd");
     };
 
     dragTarget.addEventListener("mousemove", onMouseMove);
