@@ -11,11 +11,10 @@ class ResizeHandle extends events.EventEmitter {
   start: boolean;
   savedSize: number = null;
 
-
   constructor(targetElt: HTMLElement, direction: string, options?: { collapsable?: boolean }) {
     super();
 
-    if ([ "left", "right", "top", "bottom" ].indexOf(direction) === -1) throw new Error("Invalid direction" );
+    if ([ "left", "right", "top", "bottom" ].indexOf(direction) === -1) throw new Error("Invalid direction");
 
     this.horizontal = [ "left", "right" ].indexOf(direction) !== -1;
     this.start = [ "left", "top" ].indexOf(direction) !== -1;
@@ -60,6 +59,7 @@ class ResizeHandle extends events.EventEmitter {
   onMouseDown = (event: MouseEvent) => {
     if (event.button !== 0) return;
     if (this.targetElt.style.display === "none") return;
+    if (this.handleElt.classList.contains("disabled")) return;
 
     this.emit("dragStart");
 
