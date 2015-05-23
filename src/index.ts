@@ -60,6 +60,7 @@ class ResizeHandle extends events.EventEmitter {
     if (event.button !== 0) return;
     if (this.targetElt.style.display === "none") return;
     if (this.handleElt.classList.contains("disabled")) return;
+    event.preventDefault();
 
     this.emit("dragStart");
 
