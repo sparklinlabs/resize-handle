@@ -6,7 +6,7 @@
   "main": "./lib/PerfectResize.js",
   "scripts": {
     "build": "cd src && ../node_modules/.bin/tsc && cd .. && ./node_modules/.bin/browserify src/index.js --standalone PerfectResize --outfile lib/PerfectResize.js",
-    "build_win": "cd src && call ../node_modules/.bin/tsc && cd .. && call node_modules/.bin/browserify src/index.js --standalone PerfectResize --outfile lib/PerfectResize.js"
+    "build-win": "cd src && call ../node_modules/.bin/tsc && cd .. && call node_modules/.bin/browserify src/index.js --standalone PerfectResize --outfile lib/PerfectResize.js"
   },
   "repository": {
     "type": "hg",
