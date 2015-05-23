@@ -1,6 +1,6 @@
 {
   "name": "perfect-resize",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Robust resize handles for your HTML5 apps and websites",
   "author": "Elisée Maurer <elisee@sparklinlabs.com>",
   "main": "./lib/PerfectResize.js",
