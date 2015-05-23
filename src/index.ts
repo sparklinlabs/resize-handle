@@ -80,7 +80,7 @@ class ResizeHandle extends events.EventEmitter {
     let dragTarget: any;
 
     if ((<any>this.handleElt).setCapture != null) {
-      dragTarget = this;
+      dragTarget = this.handleElt;
       dragTarget.setCapture();
     } else {
       dragTarget = window;
