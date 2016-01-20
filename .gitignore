@@ -1,4 +1,3 @@
 **/node_modules
-lib/*.html
 lib/*.js
 src/*.js
