@@ -3,15 +3,15 @@
 import events = require("events");
 
 class ResizeHandle extends events.EventEmitter {
-
   handleElt: HTMLDivElement;
   targetElt: HTMLElement;
-  direction: string;
-  horizontal: boolean;
-  start: boolean;
-  savedSize: number = null;
 
-  constructor(targetElt: HTMLElement, direction: string, options?: { collapsable?: boolean }) {
+  private direction: string;
+  private horizontal: boolean;
+  private start: boolean;
+  private savedSize: number = null;
+
+  constructor(targetElt: HTMLElement, direction: string, options?: { collapsable?: boolean; }) {
     super();
 
     if ([ "left", "right", "top", "bottom" ].indexOf(direction) === -1) throw new Error("Invalid direction");
@@ -24,7 +24,7 @@ class ResizeHandle extends events.EventEmitter {
     this.targetElt = targetElt;
     this.direction = direction;
 
-    this.handleElt = <HTMLDivElement>document.createElement("div");
+    this.handleElt = document.createElement("div") as HTMLDivElement;
     this.handleElt.classList.add("resize-handle");
     this.handleElt.classList.add(direction);
     if (options.collapsable) this.handleElt.classList.add("collapsable");
@@ -36,10 +36,10 @@ class ResizeHandle extends events.EventEmitter {
     this.handleElt.addEventListener("mousedown", this.onMouseDown);
   }
 
-  onDoubleClick = (event: MouseEvent) => {
+  private onDoubleClick = (event: MouseEvent) => {
     if (event.button !== 0 || !this.handleElt.classList.contains("collapsable")) return;
 
-    let size: number = (<any>this.targetElt.getBoundingClientRect())[ this.horizontal ? "width" : "height" ];
+    let size: number = (this.targetElt.getBoundingClientRect() as any)[ this.horizontal ? "width" : "height" ];
     let newSize: number;
 
     if (size > 0) {
@@ -56,7 +56,7 @@ class ResizeHandle extends events.EventEmitter {
     else this.targetElt.style.height = `${newSize}px`;
   };
 
-  onMouseDown = (event: MouseEvent) => {
+  private onMouseDown = (event: MouseEvent) => {
     if (event.button !== 0) return;
     if (this.targetElt.style.display === "none") return;
     if (this.handleElt.classList.contains("disabled")) return;
@@ -80,7 +80,7 @@ class ResizeHandle extends events.EventEmitter {
 
     let dragTarget: any;
 
-    if ((<any>this.handleElt).setCapture != null) {
+    if ((this.handleElt as any).setCapture != null) {
       dragTarget = this.handleElt;
       dragTarget.setCapture();
     } else {
@@ -115,7 +115,6 @@ class ResizeHandle extends events.EventEmitter {
     dragTarget.addEventListener("mousemove", onMouseMove);
     dragTarget.addEventListener("mouseup", onMouseUp);
   };
-
 }
 
 export = ResizeHandle;
