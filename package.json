@@ -1,14 +1,14 @@
 {
-  "name": "perfect-resize",
-  "description": "Robust resize handles for your HTML5 apps and websites",
-  "version": "3.0.0",
+  "name": "resize-handle",
+  "description": "Robust resize handles / splitters for your HTML5 apps and websites",
+  "version": "4.0.0",
   "author": "Elisée Maurer <elisee@sparklinlabs.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sparklinlabs/perfect-resize"
+    "url": "https://github.com/sparklinlabs/resize-handle"
   },
   "license": "ISC",
-  "main": "./lib/PerfectResize.js",
+  "main": "./lib/ResizeHandle.js",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js -w",
@@ -18,6 +18,8 @@
     "resizehandle",
     "resize",
     "handle",
+    "splitter",
+    "splitbar",
     "widget",
     "draggable"
   ],

@@ -4,7 +4,7 @@
     <header>
       <h1>
         <a href="https://github.com/sparklinlabs">sparklinlabs</a> /  
-        <a href="https://github.com/sparklinlabs/perfect-resize">perfect-resize</a>
+        <a href="https://github.com/sparklinlabs/resize-handle">resize-handle</a>
       </h1>
       <p>An HTML5 draggable resize handle</p>
     </header>
@@ -60,6 +60,7 @@
         margin: 0 1em 1em 1em;
         border: 1px solid #ddd;
         background-color: #fff;
+        overflow: auto;
       }
 
       .content {
@@ -106,9 +107,9 @@
       html.handle-dragging iframe { pointer-events: none; }
     </style>
 
-    <script src="PerfectResize.js"></script>
+    <script src="ResizeHandle.js"></script>
     <script>
-      new PerfectResize(document.body.querySelector("main .sidebar"), "right", { collapsable: true });
+      new ResizeHandle(document.body.querySelector("main .sidebar"), "right", { collapsable: true });
     </script>
   </body>
 </html>

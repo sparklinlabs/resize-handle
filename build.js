@@ -10,5 +10,5 @@ const watchArgs = watchMode ? [ "-w" ] : [];
 
 spawn(`tsc${suffix}`, [ "-p", `${__dirname}/src` ], spawnOptions).on("close", () => {
   if (watchMode) spawn(`tsc${suffix}`, watchArgs.concat([ "-p", `${__dirname}/src` ]), spawnOptions);
-  spawn(`${bundler}${suffix}`, [ `${__dirname}/src/index.js`, "-s", "PerfectResize", "-o", `${__dirname}/lib/PerfectResize.js` ], spawnOptions);
+  spawn(`${bundler}${suffix}`, [ `${__dirname}/src/index.js`, "-s", "ResizeHandle", "-o", `${__dirname}/lib/ResizeHandle.js` ], spawnOptions);
 });
