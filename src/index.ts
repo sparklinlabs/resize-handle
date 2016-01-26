@@ -24,13 +24,19 @@ class ResizeHandle extends events.EventEmitter {
     this.targetElt = targetElt;
     this.direction = direction;
 
-    this.handleElt = document.createElement("div") as HTMLDivElement;
-    this.handleElt.classList.add("resize-handle");
-    this.handleElt.classList.add(direction);
-    if (options.collapsable) this.handleElt.classList.add("collapsable");
+    let candidateElt = this.start ? targetElt.nextElementSibling : targetElt.previousElementSibling;
+    if (candidateElt != null && candidateElt.tagName === "DIV" && candidateElt.classList.contains("resize-handle")) {
+      this.handleElt = candidateElt as HTMLDivElement;
+    } else {
+      this.handleElt = document.createElement("div") as HTMLDivElement;
+      this.handleElt.classList.add("resize-handle");
 
-    if (this.start) targetElt.parentNode.insertBefore(this.handleElt, targetElt.nextSibling);
-    else targetElt.parentNode.insertBefore(this.handleElt, targetElt);
+      if (this.start) targetElt.parentNode.insertBefore(this.handleElt, targetElt.nextSibling);
+      else targetElt.parentNode.insertBefore(this.handleElt, targetElt);
+    }
+
+    this.handleElt.classList.add(direction);
+    this.handleElt.classList.toggle("collapsable", options.collapsable);
 
     this.handleElt.addEventListener("dblclick", this.onDoubleClick);
     this.handleElt.addEventListener("mousedown", this.onMouseDown);
