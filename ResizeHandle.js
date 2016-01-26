@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.PerfectResize = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ResizeHandle = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -394,15 +394,20 @@ var ResizeHandle = (function (_super) {
             options = {};
         this.targetElt = targetElt;
         this.direction = direction;
-        this.handleElt = document.createElement("div");
-        this.handleElt.classList.add("resize-handle");
+        var candidateElt = this.start ? targetElt.nextElementSibling : targetElt.previousElementSibling;
+        if (candidateElt != null && candidateElt.tagName === "DIV" && candidateElt.classList.contains("resize-handle")) {
+            this.handleElt = candidateElt;
+        }
+        else {
+            this.handleElt = document.createElement("div");
+            this.handleElt.classList.add("resize-handle");
+            if (this.start)
+                targetElt.parentNode.insertBefore(this.handleElt, targetElt.nextSibling);
+            else
+                targetElt.parentNode.insertBefore(this.handleElt, targetElt);
+        }
         this.handleElt.classList.add(direction);
-        if (options.collapsable)
-            this.handleElt.classList.add("collapsable");
-        if (this.start)
-            targetElt.parentNode.insertBefore(this.handleElt, targetElt.nextSibling);
-        else
-            targetElt.parentNode.insertBefore(this.handleElt, targetElt);
+        this.handleElt.classList.toggle("collapsable", options.collapsable);
         this.handleElt.addEventListener("dblclick", this.onDoubleClick);
         this.handleElt.addEventListener("mousedown", this.onMouseDown);
     }

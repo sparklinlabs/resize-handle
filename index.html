@@ -4,7 +4,7 @@
     <header>
       <h1>
         <a href="https://github.com/sparklinlabs">sparklinlabs</a> /  
-        <a href="https://github.com/sparklinlabs/perfect-resize">perfect-resize</a>
+        <a href="https://github.com/sparklinlabs/resize-handle">resize-handle</a>
       </h1>
       <p>An HTML5 draggable resize handle</p>
     </header>
@@ -20,7 +20,13 @@
 
         <p>Aenean eget convallis nibh, eu blandit elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam tristique velit nec gravida varius. In eu lectus tristique, bibendum augue vitae, luctus massa. In non dui eros. Pellentesque at sagittis lacus. Mauris sit amet ultricies dolor, ut tincidunt tortor. Quisque et urna quis odio ultricies ultrices et sit amet metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla fermentum velit a aliquet dictum.
       </div>
-      <div class="sidebar">Sidebar</div>
+      <div class="resize-handle right"></div>
+      <div class="sidebar">
+        <h3>Sidebar</h3>
+        
+        <p>You can double-click the bar to collapse the sidebar.
+        This is an option that can be toggled on or off.</p>
+        </div>
     </main>
 
     <style>
@@ -54,6 +60,7 @@
         margin: 0 1em 1em 1em;
         border: 1px solid #ddd;
         background-color: #fff;
+        overflow: auto;
       }
 
       .content {
@@ -100,9 +107,9 @@
       html.handle-dragging iframe { pointer-events: none; }
     </style>
 
-    <script src="PerfectResize.js"></script>
+    <script src="ResizeHandle.js"></script>
     <script>
-      new PerfectResize(document.body.querySelector("main .sidebar"), "right", { collapsable: true });
+      new ResizeHandle(document.body.querySelector("main .sidebar"), "right", { collapsable: true });
     </script>
   </body>
 </html>
