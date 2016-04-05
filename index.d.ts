@@ -2,7 +2,7 @@ declare class ResizeHandle {
   handleElt: HTMLDivElement;
   targetElt: HTMLElement;
 
-  constructor(targetElt: HTMLElement, direction: string /* "left", "right", "top", "bottom" */, options?: { collapsable?: boolean; });
+  constructor(targetElt: HTMLElement, direction: "left" | "right" | "top" | "bottom", options?: { collapsable?: boolean; });
 
   addListener(event: string, listener: Function): ResizeHandle;
   on(event: string, listener: Function): ResizeHandle;
