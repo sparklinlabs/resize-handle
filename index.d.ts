@@ -22,4 +22,6 @@ declare class ResizeHandle {
 
 declare namespace ResizeHandle {}
 
-export = ResizeHandle;
+declare module "resize-handle" {
+  export = ResizeHandle;
+}

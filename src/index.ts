@@ -1,5 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
-
 import events = require("events");
 
 class ResizeHandle extends events.EventEmitter {
