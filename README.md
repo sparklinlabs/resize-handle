@@ -13,7 +13,7 @@ Check out the [live demo](http://sparklinlabs.github.io/resize-handle/) and its 
 You'll need to setup a `display: flex; box-sizing: border-box;` container with two `div` children.
 Make the main pane `flex: 1; flex-basis: 0;` and give it a `min-width`. Make sure to set the sidebar's `width` and `min-width` (or `height`, if vertical).
 
-Include `lib/ResizeHandle.js` in your project and create the handle by calling `new ResizeHandle(document.getElementById("#sidebar"), "right")`.
+Include `lib/ResizeHandle.js` in your project and create the handle by calling `new ResizeHandle(document.querySelector("#sidebar"), "right")`.
 You can pass `{ collapsable: true }` as a third argument to enable double-click-to-collapse.
 
 The object returned by the ResizeHandle constructor emits `dragStart`, `drag` and `dragEnd` events.
